@@ -17,7 +17,7 @@ import java.time.Instant;
 @Getter
 @Setter
 @Builder
-public class GamerGameInfo {
+public class GamerProgress {
 
     @EmbeddedId
     private GamersGamesId id;
