@@ -3,6 +3,7 @@ package com.fyuizee.gamingapi.service.gamergamelink;
 import com.fyuizee.gamingapi.controller.gamergamelink.dto.request.GamerGameLinkRequest;
 import com.fyuizee.gamingapi.controller.gamergamelink.dto.response.GamerGameLinkResponse;
 import com.fyuizee.gamingapi.persistence.domain.gamers.GamerEntity;
+import com.fyuizee.gamingapi.persistence.domain.gamersgames.GamerProgress;
 import com.fyuizee.gamingapi.persistence.domain.games.GameEntity;
 import com.fyuizee.gamingapi.persistence.mapper.GamerProgressMapper;
 import com.fyuizee.gamingapi.service.game.GameService;
@@ -24,8 +25,7 @@ public class GamerGameLinkService {
         GameEntity game = gameService.getGameById(request.getGameId());
         GamerEntity gamer = gamerService.getGamerById(request.getGamerId());
 
-        return gamerProgressMapper.toResponse(
-                gamerProgressService.saveGamerProgress(gamer, game, request.getLevelType())
-        );
+        GamerProgress gamerProgress = gamerProgressService.saveGamerProgress(gamer, game, request.getLevelType());
+        return gamerProgressMapper.toResponse(gamerProgress);
     }
 }

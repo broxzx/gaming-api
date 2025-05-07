@@ -70,6 +70,11 @@
             <artifactId>mapstruct</artifactId>
             <version>${mapstruct.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version>
+        </dependency>
 
         <!--   tests     -->
         <dependency>
@@ -96,7 +101,7 @@
                         </path>
                         <path>
                             <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct</artifactId>
+                            <artifactId>mapstruct-processor</artifactId>
                             <version>${mapstruct.version}</version>
                         </path>
                         <path>
