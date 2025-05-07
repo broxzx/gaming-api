@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE}
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    env_file: ./config/postgres-gaming.env
+    ports:
+      - ${POSTGRES_PORT}
+    volumes:
+      - ${POSTGRES_VOLUME}:/var/lib/postgresql/data
+    networks:
+      - backend
+    restart: unless-stopped
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  gaming_postgres_vm:
