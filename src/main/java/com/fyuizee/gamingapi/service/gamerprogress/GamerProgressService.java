@@ -3,6 +3,7 @@ package com.fyuizee.gamingapi.service.gamerprogress;
 import com.fyuizee.gamingapi.persistence.domain.gamers.GamerEntity;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.GamerProgress;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
+import com.fyuizee.gamingapi.persistence.domain.gamersgames.id.GamersGamesId;
 import com.fyuizee.gamingapi.persistence.domain.games.GameEntity;
 import com.fyuizee.gamingapi.persistence.repository.GamerProgressRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ public class GamerProgressService {
     @Transactional
     public GamerProgress saveGamerProgress(GamerEntity gamer, GameEntity game, LevelType level) {
         GamerProgress gamerProgress = GamerProgress.builder()
+                .id(new GamersGamesId(game.getId(), gamer.getId()))
                 .gamerEntity(gamer)
                 .gameEntity(game)
                 .level(level)

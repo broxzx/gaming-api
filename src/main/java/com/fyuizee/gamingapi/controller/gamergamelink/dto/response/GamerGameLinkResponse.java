@@ -1,7 +1,5 @@
 package com.fyuizee.gamingapi.controller.gamergamelink.dto.response;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @Data
 @Builder
-@JsonNaming(value = PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class GamerGameLinkResponse {
 
     private UUID gamerId;

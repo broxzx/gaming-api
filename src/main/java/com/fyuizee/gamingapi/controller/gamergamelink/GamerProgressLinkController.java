@@ -2,7 +2,7 @@ package com.fyuizee.gamingapi.controller.gamergamelink;
 
 import com.fyuizee.gamingapi.controller.gamergamelink.dto.request.GamerGameLinkRequest;
 import com.fyuizee.gamingapi.controller.gamergamelink.dto.response.GamerGameLinkResponse;
-import com.fyuizee.gamingapi.service.gamergamelink.GamerGameLinkService;
+import com.fyuizee.gamingapi.service.gamergamelink.GamerProgressLinkService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/gamers/link/games")
 @RequiredArgsConstructor
-public class GamerGameLinkController {
+public class GamerProgressLinkController {
 
-    private final GamerGameLinkService gamerGameLinkService;
+    private final GamerProgressLinkService gamerProgressLinkService;
 
     @PostMapping
     public ResponseEntity<GamerGameLinkResponse> linkGamerToGame(@RequestBody @Valid GamerGameLinkRequest gamerGameLinkRequest) {
-        return ResponseEntity.ok(gamerGameLinkService.linkGamerToGame(gamerGameLinkRequest));
+        return ResponseEntity.ok(gamerProgressLinkService.linkGamerToGame(gamerGameLinkRequest));
     }
 
 }
