@@ -15,4 +15,4 @@ COPY --from=build /target/gaming-api.jar ./application.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "./application.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "./application.jar"]
