@@ -1,9 +1,11 @@
 package com.fyuizee.gamingapi.controller.gamer;
 
+import com.fyuizee.gamingapi.controller.gamer.dto.request.CreateGamerRequest;
 import com.fyuizee.gamingapi.controller.gamer.dto.response.GamerByLevelResponse;
 import com.fyuizee.gamingapi.controller.gamer.dto.response.GamerResponse;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
 import com.fyuizee.gamingapi.service.gamer.GamerService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -17,6 +19,11 @@ import org.springframework.web.bind.annotation.*;
 public class GamerController {
 
     private final GamerService gamerService;
+
+    @PostMapping
+    public ResponseEntity<GamerResponse> saveGamer(@RequestBody @Valid CreateGamerRequest createGamerRequest) {
+        return ResponseEntity.ok(gamerService.saveGamer(createGamerRequest));
+    }
 
     @GetMapping
     public ResponseEntity<Slice<GamerResponse>> searchForGamer(

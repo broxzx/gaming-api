@@ -1,8 +1,7 @@
 package com.fyuizee.gamingapi.persistence.repository.gamer;
 
-import com.fyuizee.gamingapi.controller.gamer.dto.response.GamerResponse;
 import com.fyuizee.gamingapi.persistence.domain.gamers.GamerEntity;
-import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
+import jakarta.validation.constraints.Email;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface GamerRepository extends JpaRepository<GamerEntity, UUID> {
@@ -33,4 +33,8 @@ public interface GamerRepository extends JpaRepository<GamerEntity, UUID> {
                    "WHERE gg.level = CAST(:level AS level_type)" +
                    "ORDER BY created_at", nativeQuery = true)
     <T> List<T> findByType(@Param("level") String levelType, Class<T> clazz);
+
+    @Query("FROM GamerEntity g WHERE g.email ilike :email or g.username ilike :username")
+    Optional<GamerEntity> findByEmailOrUsername(@Email String email, String username);
+
 }
