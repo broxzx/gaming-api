@@ -15,18 +15,33 @@ services:
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "gaming"]
 
+  redis:
+    image: ${REDIS_IMAGE}
+    container_name: ${REDIS_CONTAINER_NAME}
+    ports:
+      - ${REDIS_PORT}
+    healthcheck:
+      test: [ "CMD", "redis-cli", "--raw", "incr", "ping" ]
+    volumes:
+      - gaming_redis_vm:/data
+    networks:
+      - backend
+
   gaming-api:
-    container_name: gaming-api
+    container_name: ${APPLICATION_CONTAINER_NAME}
     build:
       context: ./
     ports:
-      - "8080:8080"
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
+      - ${APPLICATION_PORT}
+    env_file:
+      - ./config/gaming-api.env
     networks:
       - backend
+    restart: unless-stopped
     depends_on:
       postgres:
+        condition: service_healthy
+      redis:
         condition: service_healthy
 
 networks:
@@ -35,3 +50,4 @@ networks:
 
 volumes:
   gaming_postgres_vm:
+  gaming_redis_vm:

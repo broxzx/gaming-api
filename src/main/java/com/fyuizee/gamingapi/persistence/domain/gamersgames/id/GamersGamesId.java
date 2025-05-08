@@ -3,17 +3,15 @@ package com.fyuizee.gamingapi.persistence.domain.gamersgames.id;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.UUID;
 
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
+@Data
 public class GamersGamesId {
 
     @Column(name = "game_id", nullable = false)

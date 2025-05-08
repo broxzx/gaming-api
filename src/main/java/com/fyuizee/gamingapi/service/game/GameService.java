@@ -10,6 +10,7 @@ import com.fyuizee.gamingapi.persistence.repository.game.GameRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -22,6 +23,7 @@ public class GameService {
     private final GameRepository repository;
     private final GameMapper mapper;
 
+    @Cacheable(cacheNames = "games", key = "#gameId")
     public GameEntity getGameById(@NotNull UUID gameId) {
         log.debug("look up for game with id: {}", gameId);
         return repository.findById(gameId)

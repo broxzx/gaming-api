@@ -1,3 +1,8 @@
 spring:
   datasource:
     url: ${DATASOURCE_URL:jdbc:postgresql://postgres:5432/gaming}
+
+  data:
+    redis:
+      host: redis
+      port: 6379

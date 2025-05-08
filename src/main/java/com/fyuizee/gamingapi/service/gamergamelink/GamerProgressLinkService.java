@@ -11,6 +11,7 @@ import com.fyuizee.gamingapi.service.gamer.GamerService;
 import com.fyuizee.gamingapi.service.gamerprogress.GamerProgressService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,7 @@ public class GamerProgressLinkService {
     private final GamerProgressService gamerProgressService;
     private final GamerProgressMapper gamerProgressMapper;
 
+    @CacheEvict(cacheNames = {"gamers-search", "gamers-by-level"}, allEntries = true)
     public GamerGameLinkResponse linkGamerToGame(GamerGameLinkRequest request) {
         GameEntity game = gameService.getGameById(request.getGameId());
         GamerEntity gamer = gamerService.getGamerById(request.getGamerId());

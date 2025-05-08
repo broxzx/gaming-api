@@ -90,39 +90,18 @@ Request:
 Response:
 ```json
 {
-    "content": [
-        {
-            "username": "ninja",
-            "game": "Red Dead Redemption 2",
-            "email": "ninja@gmail.com",
-            "geography": "South America",
-            "createdAt": "2025-05-08T07:59:52.775182Z",
-            "updatedAt": "2025-05-08T07:59:52.775182Z"
-        },...
-    ],
-    "pageable": {
-        "pageNumber": 0,
-        "pageSize": 10,
-        "sort": {
-            "sorted": false,
-            "empty": true,
-            "unsorted": true
-        },
-        "offset": 0,
-        "paged": true,
-        "unpaged": false
+  "content": [
+    {
+      "username": "ninja",
+      "game": "Red Dead Redemption 2",
+      "email": "ninja@gmail.com",
+      "geography": "South America",
+      "createdAt": "2025-05-08T07:59:52.775182Z",
+      "updatedAt": "2025-05-08T07:59:52.775182Z"
     },
-    "size": 10,
-    "number": 0,
-    "first": true,
-    "last": true,
-    "numberOfElements": 8,
-    "sort": {
-        "sorted": false,
-        "empty": true,
-        "unsorted": true
-    },
-    "empty": false
+    ...
+  ],
+  "hasNext": true
 }
 ```
 

@@ -12,9 +12,12 @@ import com.fyuizee.gamingapi.persistence.mapper.GamerMapper;
 import com.fyuizee.gamingapi.persistence.repository.gamer.GamerRepository;
 import com.fyuizee.gamingapi.persistence.repository.gamer.models.GamerSearchResult;
 import com.fyuizee.gamingapi.service.geography.GeographyService;
+import com.fyuizee.gamingapi.utils.CachedSlice;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -34,6 +37,7 @@ public class GamerService {
     private final GamerMapper mapper;
     private final GeographyService geographyService;
 
+    @CacheEvict(cacheNames = "gamers-search", allEntries = true)
     public GamerResponse saveGamer(CreateGamerRequest createGamerRequest) {
         log.debug("start saving gamer by request: {}", createGamerRequest);
         GeographyEntity geographyEntity = geographyService.getByName(createGamerRequest.getGeography().getValue());
@@ -65,6 +69,7 @@ public class GamerService {
 
     }
 
+    @Cacheable(cacheNames = "gamers", key = "#gamerId")
     public GamerEntity getGamerById(@NotNull UUID gamerId) {
         return repository.findById(gamerId)
                 .orElseThrow(() -> {
@@ -73,13 +78,17 @@ public class GamerService {
                 });
     }
 
-    public Slice<GamerResponse> searchForGamer(LevelType levelType, String gameName, String geography, Pageable pageable) {
+    @Cacheable(cacheNames = "gamers-search", key = "{#levelType, #gameName, #geography, #pageable.pageNumber, #pageable.pageSize}")
+    public CachedSlice<GamerResponse> searchForGamer(LevelType levelType, String gameName, String geography, Pageable pageable) {
         String level = Optional.ofNullable(levelType).map(Enum::name).orElse(null);
         log.debug("searching for gamer with parameters. level: {}, gameName: {}, geography: {}, pageable: {}", level, gameName, geography, pageable);
-        return repository.searchForGamer(level, gameName, geography, pageable, GamerSearchResult.class)
+        Slice<GamerResponse> map = repository.searchForGamer(level, gameName, geography, pageable, GamerSearchResult.class)
                 .map(mapper::toResponse);
+
+        return new CachedSlice<>(map);
     }
 
+    @Cacheable(cacheNames = "gamers-by-level", key = "#levelType")
     public GamerByLevelResponse getGamersByLevelResponse(LevelType levelType) {
         log.debug("getting gamers by level: {}", levelType);
         Map<String, List<GamerResponse>> data = repository.findByType(levelType.name(), GamerSearchResult.class)

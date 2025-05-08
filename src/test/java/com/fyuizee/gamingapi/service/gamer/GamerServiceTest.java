@@ -14,6 +14,7 @@ import com.fyuizee.gamingapi.persistence.mapper.GamerMapper;
 import com.fyuizee.gamingapi.persistence.repository.gamer.GamerRepository;
 import com.fyuizee.gamingapi.persistence.repository.gamer.models.GamerSearchResult;
 import com.fyuizee.gamingapi.service.geography.GeographyService;
+import com.fyuizee.gamingapi.utils.CachedSlice;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -191,7 +192,7 @@ public class GamerServiceTest {
                     .thenReturn(mockSlice);
             when(mapper.toResponse(searchResult)).thenReturn(gamerResponse);
 
-            Slice<GamerResponse> result = service.searchForGamer(levelType, gameName, geography, pageable);
+            CachedSlice<GamerResponse> result = service.searchForGamer(levelType, gameName, geography, pageable);
 
             assertThat(result).isNotNull();
 
@@ -204,7 +205,7 @@ public class GamerServiceTest {
             when(repository.searchForGamer(isNull(), isNull(), isNull(), any(Pageable.class), eq(GamerSearchResult.class)))
                     .thenReturn(new SliceImpl<>(Collections.emptyList()));
 
-            Slice<GamerResponse> result = service.searchForGamer(null, null, null, pageable);
+            CachedSlice<GamerResponse> result = service.searchForGamer(null, null, null, pageable);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent().size()).isZero();
@@ -215,7 +216,7 @@ public class GamerServiceTest {
             when(repository.searchForGamer(anyString(), anyString(), anyString(), any(Pageable.class), eq(GamerSearchResult.class)))
                     .thenReturn(new SliceImpl<>(Collections.emptyList()));
 
-            Slice<GamerResponse> result = service.searchForGamer(levelType, gameName, geography, pageable);
+            CachedSlice<GamerResponse> result = service.searchForGamer(levelType, gameName, geography, pageable);
 
             assertThat(result).isNotNull();
             assertThat(result.getContent().size()).isZero();

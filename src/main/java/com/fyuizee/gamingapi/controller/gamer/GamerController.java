@@ -5,10 +5,10 @@ import com.fyuizee.gamingapi.controller.gamer.dto.response.GamerByLevelResponse;
 import com.fyuizee.gamingapi.controller.gamer.dto.response.GamerResponse;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
 import com.fyuizee.gamingapi.service.gamer.GamerService;
+import com.fyuizee.gamingapi.utils.CachedSlice;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +26,7 @@ public class GamerController {
     }
 
     @GetMapping
-    public ResponseEntity<Slice<GamerResponse>> searchForGamer(
+    public ResponseEntity<CachedSlice<GamerResponse>> searchForGamer(
             @RequestParam(value = "level", required = false) LevelType levelType,
             @RequestParam(value = "game", required = false) String gameName,
             @RequestParam(value = "geography", required = false) String geography,

@@ -5,6 +5,7 @@ import com.fyuizee.gamingapi.persistence.domain.geography.GeographyEntity;
 import com.fyuizee.gamingapi.persistence.repository.geography.GeographyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +15,7 @@ public class GeographyService {
 
     private final GeographyRepository repository;
 
+    @Cacheable(value = "geography")
     public GeographyEntity getByName(String geography) {
         return repository.findByName(geography)
                 .orElseThrow(() -> {
