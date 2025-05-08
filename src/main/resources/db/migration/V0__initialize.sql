@@ -28,15 +28,13 @@ CREATE TABLE IF NOT EXISTS games
     released DATE DEFAULT NOW()
 );
 
-CREATE TYPE level_type AS ENUM ('NOOB', 'PRO', 'INVINCIBLE');
-
 CREATE TABLE IF NOT EXISTS gamers_games
 (
     game_id    UUID
         CONSTRAINT fk_games_id REFERENCES games (id) ON DELETE CASCADE                    NOT NULL,
     gamer_id   UUID
         CONSTRAINT fk_gamers_games_info_gamer_id REFERENCES gamers (id) ON DELETE CASCADE NOT NULL,
-    level      level_type
+    level      varchar(32)
         CONSTRAINT gamers_games_info_nn_level NOT NULL,
     created_at TIMESTAMP DEFAULT NOW(),
     CONSTRAINT pk_gamers_games PRIMARY KEY (game_id, gamer_id)

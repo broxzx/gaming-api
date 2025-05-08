@@ -2,7 +2,6 @@ package com.fyuizee.gamingapi.persistence.domain.games;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -25,7 +24,6 @@ public class GameEntity {
     private String name;
 
     @Column(name = "released")
-    @CreationTimestamp
     private LocalDate released;
 
 }

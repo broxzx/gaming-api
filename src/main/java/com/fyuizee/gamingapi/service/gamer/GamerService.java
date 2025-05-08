@@ -34,7 +34,7 @@ public class GamerService {
 
     public GamerResponse saveGamer(CreateGamerRequest createGamerRequest) {
         GeographyEntity geographyEntity = geographyService.getByName(createGamerRequest.getGeography());
-        checkIfUserExists(createGamerRequest.getEmail(), createGamerRequest.getUsername());
+        checkIfGamerExists(createGamerRequest.getEmail(), createGamerRequest.getUsername());
 
         GamerEntity gamerEntity = GamerEntity.builder()
                 .username(createGamerRequest.getUsername())
@@ -47,7 +47,7 @@ public class GamerService {
         );
     }
 
-    private void checkIfUserExists(String email, String username) {
+    private void checkIfGamerExists(String email, String username) {
         repository.findByEmailOrUsername(email, username)
                 .ifPresent(gamerEntity -> {
                     throw new EntityAlreadyExistsException(List.of(email, username), GamerEntity.class);
@@ -62,7 +62,7 @@ public class GamerService {
 
     public Slice<GamerResponse> searchForGamer(LevelType levelType, String gameName, String geography, Pageable pageable) {
         String level = Optional.ofNullable(levelType).map(Enum::name).orElse(null);
-        return repository.searchForUser(level, gameName, geography, pageable, GamerSearchResult.class)
+        return repository.searchForGamer(level, gameName, geography, pageable, GamerSearchResult.class)
                 .map(mapper::toResponse);
     }
 

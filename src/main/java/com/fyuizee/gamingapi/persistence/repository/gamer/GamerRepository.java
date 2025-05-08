@@ -18,19 +18,19 @@ public interface GamerRepository extends JpaRepository<GamerEntity, UUID> {
                    "JOIN geography geo ON (geo.id = gamer.geography_id)" +
                    "LEFT JOIN gamers_games gg ON (gg.gamer_id = gamer.id)" +
                    "JOIN games game ON (gg.game_id = game.id)" +
-                   "WHERE gg.level = COALESCE(CAST(:level AS level_type), gg.level)" +
-                   "AND game.name = COALESCE(:game, game.name)" +
-                   "AND geo.name = COALESCE(:geography, geo.name)" +
+                   "WHERE gg.level like COALESCE(:level, gg.level)" +
+                   "AND game.name ilike COALESCE(:game, game.name)" +
+                   "AND geo.name ilike COALESCE(:geography, geo.name)" +
                    "ORDER BY gamer.created_at", nativeQuery = true)
-    <T> Slice<T> searchForUser(@Param("level") String level, @Param("game") String game, @Param("geography") String geography,
-                               Pageable pageable, Class<T> clazz);
+    <T> Slice<T> searchForGamer(@Param("level") String level, @Param("game") String game, @Param("geography") String geography,
+                                Pageable pageable, Class<T> clazz);
 
 
     @Query(value = "SELECT gamer.id, gamer.username, game.name as game, gamer.email, gamer.created_at, gamer.updated_at, geo.name AS geography FROM gamers gamer " +
                    "JOIN geography geo ON (geo.id = gamer.geography_id)" +
                    "JOIN gamers_games gg ON (gg.gamer_id = gamer.id) " +
                    "JOIN games game ON (gg.game_id = game.id)" +
-                   "WHERE gg.level = CAST(:level AS level_type)" +
+                   "WHERE gg.level like :level " +
                    "ORDER BY created_at", nativeQuery = true)
     <T> List<T> findByType(@Param("level") String levelType, Class<T> clazz);
 
