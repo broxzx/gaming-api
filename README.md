@@ -64,7 +64,7 @@ Request:
 {
     "username": "mock data",
     "email": "mock-data@gmail.com",
-    "geography": "europe"
+    "geography": "EUROPE"
 }
 ```
 
