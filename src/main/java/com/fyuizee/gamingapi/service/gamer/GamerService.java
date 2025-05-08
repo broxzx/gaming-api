@@ -36,19 +36,23 @@ public class GamerService {
 
     public GamerResponse saveGamer(CreateGamerRequest createGamerRequest) {
         log.debug("start saving gamer by request: {}", createGamerRequest);
-        GeographyEntity geographyEntity = geographyService.getByName(createGamerRequest.getGeography());
+        GeographyEntity geographyEntity = geographyService.getByName(createGamerRequest.getGeography().getValue());
         checkIfGamerExists(createGamerRequest.getEmail(), createGamerRequest.getUsername());
 
-        GamerEntity gamerEntity = GamerEntity.builder()
-                .username(createGamerRequest.getUsername())
-                .email(createGamerRequest.getEmail())
-                .geographyEntity(geographyEntity)
-                .build();
+        GamerEntity gamerEntity = buildGamerEntity(createGamerRequest, geographyEntity);
 
         log.debug("saving gamer with email \"{}\" or username \"{}\"", createGamerRequest.getEmail(), createGamerRequest.getUsername());
         return mapper.toResponse(
                 repository.save(gamerEntity)
         );
+    }
+
+    private GamerEntity buildGamerEntity(CreateGamerRequest createGamerRequest, GeographyEntity geographyEntity) {
+        return GamerEntity.builder()
+                .username(createGamerRequest.getUsername())
+                .email(createGamerRequest.getEmail())
+                .geographyEntity(geographyEntity)
+                .build();
     }
 
     private void checkIfGamerExists(String email, String username) {

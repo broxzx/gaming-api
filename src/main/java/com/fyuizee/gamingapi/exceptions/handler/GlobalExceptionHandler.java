@@ -5,6 +5,7 @@ import com.fyuizee.gamingapi.exceptions.EntityAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,13 @@ public class GlobalExceptionHandler {
         });
 
         problemDetail.setProperty("info", errors);
+
+        return ResponseEntity.status(problemDetail.getStatus()).body(problemDetail);
+    }
+
+    @ExceptionHandler(exception = {HttpMessageNotReadableException.class})
+    public ResponseEntity<ProblemDetail> handleBadRequestException(HttpMessageNotReadableException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
 
         return ResponseEntity.status(problemDetail.getStatus()).body(problemDetail);
     }
