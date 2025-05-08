@@ -7,11 +7,13 @@ import com.fyuizee.gamingapi.persistence.domain.gamersgames.id.GamersGamesId;
 import com.fyuizee.gamingapi.persistence.domain.games.GameEntity;
 import com.fyuizee.gamingapi.persistence.repository.gamerprogress.GamerProgressRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class GamerProgressService {
 
     private final GamerProgressRepository repository;
@@ -26,6 +28,7 @@ public class GamerProgressService {
                 .build();
         repository.save(gamerProgress);
 
+        log.debug("saved gamer progress for gamer \"{}\" and game \"{}\"", gamer.getId(), game.getId());
         return gamerProgress;
     }
 

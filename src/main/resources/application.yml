@@ -17,13 +17,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: validate
-    show-sql: true
 
   data:
     jdbc:
       dialect: postgresql
-
-logging:
-  level:
-    org.flywaydb: DEBUG
-    db.migration: DEBUG

@@ -18,6 +18,11 @@ cd gaming-api
 ./mvnw spring-boot:run
 ```
 
+if you need more detailed logging consider setting profile to dev (via IDE or CLI):
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
 - [Description](#description)
 - [How To Run](#how-to-run)
 - [API Endpoints](#api-endpoints)
