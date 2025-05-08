@@ -4,5 +4,5 @@ spring:
 
   data:
     redis:
-      host: redis
+      host: ${REDIS_HOSTNAME:gaming-redis}
       port: 6379
