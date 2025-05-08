@@ -5,7 +5,7 @@ import com.fyuizee.gamingapi.persistence.domain.gamersgames.GamerProgress;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.enums.LevelType;
 import com.fyuizee.gamingapi.persistence.domain.gamersgames.id.GamersGamesId;
 import com.fyuizee.gamingapi.persistence.domain.games.GameEntity;
-import com.fyuizee.gamingapi.persistence.repository.GamerProgressRepository;
+import com.fyuizee.gamingapi.persistence.repository.gamerprogress.GamerProgressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

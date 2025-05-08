@@ -5,20 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class GamerResponse {
+public class GamerByLevelResponse {
 
-    private String username;
-    private String game;
-    private String email;
-    private String geography;
-    private Instant createdAt;
-    private Instant updatedAt;
-
+    private Map<String, List<GamerResponse>> data;
 
 }
